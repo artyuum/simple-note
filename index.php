@@ -118,7 +118,7 @@ if (!empty($_GET['dl'])) {
         }
         
         textarea {                
-            resize:vertical;    /* allow only vertical stretch   */
+            resize: vertical;    /* allow only vertical stretch */
         }
     </style>
 
@@ -192,7 +192,7 @@ if (!empty($_GET['dl'])) {
                                 <div class="modal-body">
                                   <form role="form" action="index.php" method="POST">
                                     <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Title" name="title" value="<?= $row['title'] ?>">
+                                        <input class="form-control" type="text" placeholder="Title" name="title" value="<?= htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8') ?>">
                                     </div>
                                     <div class="form-group">
                                         <textarea class="form-control" rows="5" placeholder="What do you have in mind ?" name="content" required><?= htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
