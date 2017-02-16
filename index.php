@@ -19,10 +19,24 @@ class Notes {
         );');
     }
 
-    public function fetchNotes() {
-        $stmt = $this->pdo->query('SELECT * FROM notes ORDER BY created DESC');
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+    public function fetchNotes($id = null) {
+        if ($id != null) {
+            $stmt = $this->pdo->prepare('SELECT title,content FROM notes WHERE id = :ID');
+            $stmt->bindParam(':ID', $id);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $row) {
+                $title = $row['title'];
+                header("Content-type: text/plain; charset=utf-8");
+                header("Content-Disposition: attachment; filename=$title.txt");
+                echo $row['content'];
+                return;
+            }
+        } else {
+            $stmt = $this->pdo->query('SELECT * FROM notes ORDER BY created DESC');
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
     }
 
     public function create($title, $content) {
@@ -36,12 +50,12 @@ class Notes {
 
     public function delete($id) {
         if ($id == 'all') {
-            $stmt = $this->pdo->prepare('DELETE FROM notes; VACUUM');
+            $stmt = $this->pdo->query('DELETE FROM notes; VACUUM');
         } else {
             $stmt = $this->pdo->prepare('DELETE FROM notes WHERE id = :ID');
             $stmt->bindParam(':ID', $id);
+            $stmt->execute();
         }
-        $stmt->execute();
     }
 
     public function edit($id, $title, $content) {
@@ -50,19 +64,6 @@ class Notes {
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':content', $content);
         $stmt->execute();
-    }
-
-    public function download($id) {
-        $stmt = $this->pdo->prepare('SELECT * FROM notes WHERE id = :ID');
-        $stmt->bindParam(':ID', $id);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($result as $row) {
-            $title = $row['title'];
-            header("Content-type: text/plain; charset=utf-8");
-            header("Content-Disposition: attachment; filename=$title.txt");
-            echo $row['content'];
-        }
     }
 }
 
@@ -87,7 +88,7 @@ if (!empty($_GET['del'])) {
 }
 if (!empty($_GET['dl'])) {
     $id = $_GET['dl'];
-    $notes->download($id);
+    $notes->fetchNotes($id);
     exit();
 }
 
