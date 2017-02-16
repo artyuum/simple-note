@@ -1,0 +1,34 @@
+<?php
+
+namespace Config;
+
+/**
+ * Class Parameters
+ *
+ * @package Config
+ */
+class Parameters
+{
+    /**
+     * @var string
+     */
+    private $sqliteFile;
+
+    /**
+     * Parameters constructor.
+     */
+    public function __construct()
+    {
+        $this->sqliteFile = 'set-file-name';
+    }
+
+    /**
+     * Returns the SQLite File
+     *
+     * @return string
+     */
+    public function sqliteFile()
+    {
+        return $this->sqliteFile;
+    }
+}
