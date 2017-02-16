@@ -187,7 +187,7 @@ if (!empty($_GET['dl'])) {
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                  <h4 class="modal-title">Edition</h4>
+                                  <h4 class="modal-title">Edit note</h4>
                                 </div>
                                 <div class="modal-body">
                                   <form role="form" action="index.php" method="POST">
