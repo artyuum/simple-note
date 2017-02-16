@@ -116,6 +116,10 @@ if (!empty($_GET['dl'])) {
         .container {
             max-width: 680px;
         }
+        
+        textarea {                
+            resize:vertical;    /* allow only vertical stretch   */
+        }
     </style>
 
 </head>
