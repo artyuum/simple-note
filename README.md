@@ -1,4 +1,5 @@
-For a refactored version of this application, see here : https://github.com/Robert430404/Simple-Note
+For a refactored version of this application, see here : https://github.com/Robert430404/Simple-Note  
+
 Story
 --
 The firewall at my school was blocking services like iCloud/Evernote so I couldn't use such services whenever I had a new idea in mind.
