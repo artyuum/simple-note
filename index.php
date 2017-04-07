@@ -75,16 +75,22 @@ if (isset($_POST['new'])) {
     $title = $_POST['title'];
     $content = $_POST['content'];
     $notes->create($title, $content);
+    header('Location: .');
+    exit();
 }
 if (isset($_POST['edit'])) {
     $id = $_POST['id'];
     $title = $_POST['title'];
     $content = $_POST['content'];
     $notes->edit($id, $title, $content);
+    header('Location: .');
+    exit();
 }
 if (!empty($_GET['del'])) {
     $id = $_GET['del'];
     $notes->delete($id);
+    header('Location: .');
+    exit();
 }
 if (!empty($_GET['dl'])) {
     $id = $_GET['dl'];
