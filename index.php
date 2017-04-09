@@ -2,7 +2,7 @@
 
 // Core (class)
 class Notes {
-    
+
     private $pdo;
 
     const dbFile = 'db.sqlite';
@@ -21,7 +21,7 @@ class Notes {
 
     public function fetchNotes($id = null) {
         if ($id != null) {
-            $stmt = $this->pdo->prepare('SELECT title,content FROM notes WHERE id = :ID');
+            $stmt = $this->pdo->prepare('SELECT title, content FROM notes WHERE id = :ID');
             $stmt->bindParam(':ID', $id);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -75,16 +75,22 @@ if (isset($_POST['new'])) {
     $title = $_POST['title'];
     $content = $_POST['content'];
     $notes->create($title, $content);
+    header('Location: .');
+    exit();
 }
 if (isset($_POST['edit'])) {
     $id = $_POST['id'];
     $title = $_POST['title'];
     $content = $_POST['content'];
     $notes->edit($id, $title, $content);
+    header('Location: .');
+    exit();
 }
 if (!empty($_GET['del'])) {
     $id = $_GET['del'];
     $notes->delete($id);
+    header('Location: .');
+    exit();
 }
 if (!empty($_GET['dl'])) {
     $id = $_GET['dl'];
@@ -116,8 +122,8 @@ if (!empty($_GET['dl'])) {
         .container {
             max-width: 680px;
         }
-        
-        textarea {                
+
+        textarea {
             resize: vertical;    /* allow only vertical stretch */
         }
     </style>
@@ -155,7 +161,7 @@ if (!empty($_GET['dl'])) {
         <div class="page-header">
             <h2> Previously sent </h2>
         </div>
-        
+
         <div class="table-responsive">
             <table class="table table-hover">
                     <thead>
@@ -177,7 +183,7 @@ if (!empty($_GET['dl'])) {
                             <td class="pull-right">
                                 <div class="btn-group">
                                     <a class="btn btn-default btn-xs" title="Edit this note" href="#" data-toggle="modal" data-target="#<?= $row['ID'] ?>"><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a class="btn btn-danger btn-xs" title="Delete this note" href="?del=<?= $row['ID'] ?>"><span class="glyphicon glyphicon-trash"></span></a>
+                                    <a class="btn btn-danger btn-xs" title="Delete this note" onclick="deleteNote(<?= $row['ID'] ?>)"><span class="glyphicon glyphicon-trash"></span></a>
                                     <a class="btn btn-info btn-xs" title="Download this note" href="?dl=<?= $row['ID'] ?>" target="_blank"><span class="glyphicon glyphicon-download-alt"></span></a>
                                 </div>
                             </td>
@@ -214,6 +220,14 @@ if (!empty($_GET['dl'])) {
         </div>
 <?php endif; ?>
     </div>
+
+    <script type="text/javascript">
+        function deleteNote(id){
+            if (confirm('Are you sure you want to delete this note?')){
+                window.location = '?del='+id;
+            }
+        }
+    </script>
 
 </body>
 
