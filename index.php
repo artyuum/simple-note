@@ -21,7 +21,7 @@ class Notes {
 
     public function fetchNotes($id = null) {
         if ($id != null) {
-            $stmt = $this->pdo->prepare('SELECT title,content FROM notes WHERE id = :ID');
+            $stmt = $this->pdo->prepare('SELECT title, content FROM notes WHERE id = :ID');
             $stmt->bindParam(':ID', $id);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -223,10 +223,10 @@ if (!empty($_GET['dl'])) {
 
     <script type="text/javascript">
         function deleteNote(id){
-        if (confirm('Are you sure you want to delete this note?')){
-            window.location = '?del='+id;
+            if (confirm('Are you sure you want to delete this note?')){
+                window.location = '?del='+id;
+            }
         }
-    }
     </script>
 
 </body>
