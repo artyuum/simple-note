@@ -101,39 +101,24 @@ if (!empty($_GET['dl'])) {
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="utf-8">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title> Simple Note </title>
-
-    <link rel="stylesheet" href="//bootswatch.com/flatly/bootstrap.css">
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+    <title>Simple Note</title>
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootswatch/4.5.2/flatly/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
-        .container {
-            max-width: 680px;
-        }
-
         textarea {
-            resize: vertical;    /* allow only vertical stretch */
+            resize: vertical; /* allow only vertical stretch */
         }
     </style>
-
 </head>
 
 <body>
-
     <div class="container">
-
         <div class="page-header">
             <h2> Send a new note </h2>
         </div>
@@ -143,11 +128,11 @@ if (!empty($_GET['dl'])) {
                 <input class="form-control" type="text" placeholder="Title" name="title" required>
             </div>
             <div class="form-group">
-                <textarea class="form-control" rows="5" placeholder="What do you have in mind ?" name="content" autofocus required></textarea>
+                <textarea class="form-control" rows="5" placeholder="What do you have in mind?" name="content" autofocus required></textarea>
             </div>
-            <div class="btn-group pull-right">
-                <button class="btn btn-danger" type="reset"><span class="glyphicon glyphicon-remove"></span> Clear </button>
-                <button class="btn btn-success" name="new" type="submit"><span class="glyphicon glyphicon-send"></span> Send </button>
+            <div class="btn-group float-right">
+                <button class="btn btn-danger" type="reset"><span class="fa fa-times mr-2"></span>Clear</button>
+                <button class="btn btn-success" name="new" type="submit"><span class="fa fa-paper-plane mr-2"></span>Send</button>
             </div>
         </form>
     </div>
@@ -157,34 +142,33 @@ if (!empty($_GET['dl'])) {
         $notes = $notes->fetchNotes();
     ?>
 
-    <div class="container" id="notes">
+    <div class="container mt-5" id="notes">
         <div class="page-header">
-            <h2> Previously sent </h2>
+            <h2>Previously sent</h2>
         </div>
-
         <div class="table-responsive">
             <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Time</th>
-                            <th>Date</th>
-                            <th class="pull-right">Actions<br></th>
+                            <th class="text-right">Time</th>
+                            <th class="text-right">Date</th>
+                            <th class="text-right">Actions<br></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
 <?php foreach ($notes as $row): ?>
                             <td>
-                                <small><?= htmlspecialchars(substr($row['title'], 0, 15), ENT_QUOTES, 'UTF-8') ?></small>
+                                <?= htmlspecialchars(substr($row['title'], 0, 15), ENT_QUOTES, 'UTF-8') ?>
                             </td>
-                            <td><?= date('H:i', strtotime($row['created'])) ?></td>
-                            <td><?= date('d/m/Y', strtotime($row['created'])) ?></td>
-                            <td class="pull-right">
+                            <td class="text-right"><?= date('H:i', strtotime($row['created'])) ?></td>
+                            <td class="text-right"><?= date('d/m/Y', strtotime($row['created'])) ?></td>
+                            <td class="text-right">
                                 <div class="btn-group">
-                                    <a class="btn btn-default btn-xs" title="Edit this note" href="#" data-toggle="modal" data-target="#<?= $row['ID'] ?>"><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a class="btn btn-danger btn-xs" title="Delete this note" onclick="deleteNote(<?= $row['ID'] ?>)"><span class="glyphicon glyphicon-trash"></span></a>
-                                    <a class="btn btn-info btn-xs" title="Download this note" href="?dl=<?= $row['ID'] ?>" target="_blank"><span class="glyphicon glyphicon-download-alt"></span></a>
+                                    <button class="btn btn-secondary btn-sm" title="Edit this note" data-toggle="modal" data-target="#<?= $row['ID'] ?>"><span class="fa fa-edit"></span></button>
+                                    <a class="btn btn-danger btn-sm" title="Delete this note" onclick="deleteNote(<?= $row['ID'] ?>)"><span class="fa fa-trash-alt"></span></a>
+                                    <a class="btn btn-info btn-sm" title="Download this note" href="?dl=<?= $row['ID'] ?>" target="_blank"><span class="fa fa-download"></span></a>
                                 </div>
                             </td>
                         </tr>
@@ -196,18 +180,21 @@ if (!empty($_GET['dl'])) {
                                   <h4 class="modal-title">Edit note</h4>
                                 </div>
                                 <div class="modal-body">
-                                  <form role="form" action="index.php" method="POST">
+                                  <form role="form" method="POST">
                                     <div class="form-group">
                                         <input class="form-control" type="text" placeholder="Title" name="title" value="<?= htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8') ?>">
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control" rows="5" placeholder="What do you have in mind ?" name="content" required><?= htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
+                                        <textarea class="form-control" rows="5" placeholder="What do you have in mind?" name="content" required><?= htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <input type="hidden" name="id" value="<?= $row['ID'] ?>">
                                     <div class="btn-group pull-right">
-                                        <button class="btn btn-success" name="edit" type="submit"><span class="glyphicon glyphicon-floppy-disk"></span> Save </button>
+                                        <button class="btn btn-success" name="edit" type="submit">
+                                            <span class="fa fa-floppy-disk"></span>
+                                            Save
+                                        </button>
                                     </div>
                                 </div>
                                 </form>
@@ -222,13 +209,11 @@ if (!empty($_GET['dl'])) {
     </div>
 
     <script type="text/javascript">
-        function deleteNote(id){
-            if (confirm('Are you sure you want to delete this note?')){
-                window.location = '?del='+id;
+        function deleteNote(id) {
+            if (confirm('Are you sure you want to delete this note?')) {
+                window.location = '?del=' + id;
             }
         }
     </script>
-
 </body>
-
 </html>
