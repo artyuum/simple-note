@@ -191,7 +191,7 @@ if (!empty($_GET['dl'])) {
                                             <div class="modal-footer">
                                                 <div class="btn-group pull-right">
                                                     <button class="btn btn-success" name="edit" type="submit" form="edit-form-<?= $row['ID'] ?>">
-                                                        <span class="fa fa-floppy-disk"></span>
+                                                        <span class="fa fa-save mr-2"></span>
                                                         Save
                                                     </button>
                                                 </div>
