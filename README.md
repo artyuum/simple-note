@@ -4,8 +4,8 @@ Story
 --
 The firewall at my school was blocking services like iCloud/Evernote so I couldn't use such services whenever I had a new idea in mind.
 So I decided to create my own "note web app" just for fun as I'm currently learning web development. It uses SQLite for storing notes and PDO for querying the database.
-![Home page](https://github.com/ArtyumX/Simple-Note/raw/master/1.png)
-![Edit note](https://github.com/ArtyumX/Simple-Note/raw/master/2.PNG)
+![Home page](https://user-images.githubusercontent.com/17199757/176432124-2cf49c70-49e2-43a6-a378-fa9cbf6b1b85.png)
+![Edit note](https://user-images.githubusercontent.com/17199757/176432137-c837425f-54cd-4dca-95f5-bf4ec8bd873a.png)
 
 Installation
 --
